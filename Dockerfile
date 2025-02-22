@@ -1,4 +1,6 @@
-FROM alpine:3.14@sha256:eb3e4e175ba6d212ba1d6e04fc0782916c08e1c9d7b45892e9796141b1d379ae
+FROM alpine:3.20@sha256:1e42bbe2508154c9126d48c2b8a75420c3544343bf86fd041fb7527e017a4b4a
+
+RUN apk update && apk add libssl3=3.3.2-r1
 
 ENV BLUEBIRD_WARNINGS=0 \
   NODE_ENV=production \
@@ -15,8 +17,8 @@ RUN  apk add --no-cache npm && npm i --no-optional && npm cache clean --force &&
  
 COPY . /app
 
-#RUN adduser -D appuser
-#USER appuser
+RUN adduser -D appuser
+USER appuser
 
 CMD ["node","/app/app.js"]
 
